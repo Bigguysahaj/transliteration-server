@@ -4,7 +4,9 @@ import OpenAI from "openai";
 
 const router = express.Router();
 
-router.post<{}, MessageRequest>("/openai", async (req, res) => {
+require('dotenv').config();
+
+router.post<{}, MessageRequest>("/hindi", async (req, res) => {
         console.log(req.body);
         const message = req.body.message;
         try {
@@ -28,7 +30,6 @@ router.post<{}, MessageRequest>("/openai", async (req, res) => {
   });
   
   let GPT3 = async (message: string) => {
-    console.time("api-response-gpt3");
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-1106",
   
@@ -41,8 +42,6 @@ router.post<{}, MessageRequest>("/openai", async (req, res) => {
         { role: "user", content: message },
       ],
     });
-    console.timeEnd("api-response-gpt3");
-    console.log("yayyy");
     return response.choices[0].message.content;
   };
 

@@ -7,18 +7,15 @@ import * as middlewares from './middlewares';
 import api from './api';
 import {MessageResponse, MessageRequest} from './interfaces/MessageResponse';
 
-
-require('dotenv').config();
-
 const app = express();
 
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors({
-  origin: 'https://www.netflix.com',
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type, Authorization',
-  credentials: true
+origin: 'https://www.netflix.com',
+methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+allowedHeaders: 'Content-Type, Authorization',
+credentials: true
 }));
 app.use(express.json());
 
