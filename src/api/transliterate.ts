@@ -32,14 +32,17 @@ router.post<{}, MessageRequest>("/hindi", async (req, res) => {
   let GPT3 = async (message: string) => {
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-1106",
-  
+      response_format: { type: "json_object" },
       messages: [
+        
         {
           role: "system",
           content:
-            "You are a language model designed to assist with Hindi to Hinglish conversion and transliteration. Please provide accurate and natural-sounding translations. If the input contains pure Hindi words, transliterate them appropriately. Preserve the array format at any case",
+            "You are a helpful assistant designed to output JSON and assist with Hindi to Hinglish conversion and transliteration. Please provide accurate and natural-sounding translations. If the input contains pure Hindi words, transliterate them appropriately . Present the output in JSON format, using keys starting from 0 and incrementing for each subsequent index in the array. Each index key should contain only the Hinglish output. Transliterate the entire string, including any newline characters ('\n'), instead of splitting them into separate strings. Additionally, ensure that the output is well-structured and aligned with the provided guidelines.",
         },
+
         { role: "user", content: message },
+
       ],
     });
     return response.choices[0].message.content;

@@ -11,17 +11,22 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(cors({
-origin: 'https://www.netflix.com',
-methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-allowedHeaders: 'Content-Type, Authorization',
-credentials: true
-}));
+app.use(
+  cors({
+    origin: 'https://www.netflix.com',
+    methods: 'GET,POST,OPTIONS,PUT,PATCH,DELETE',
+    exposedHeaders: ['Content-Type'], 
+    credentials: true
+  })
+);
+
+app.options("*", cors());
+
 app.use(express.json());
 
 app.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
-    message: 'Current Transliteration capabilities is Devnagri Hindi to Roman Hindi script 🌍 ',
+    message: 'Current version 2 Transliteration capabilities is Devnagri Hindi to Roman Hindi script 🌍 ',
   });
 });
 
